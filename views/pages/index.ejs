@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+  <script type="text/javascript">
+    function setTitle() {
+      try {
+        if (Number.isInteger(<%=week%>)) {
+          document.getElementById('week').innerHTML = 'Week <%=week%>';
+        }
+      }     
+      catch {
+        if ('<%=week%>' == 'ConfChamp') {
+          document.getElementById('week').innerHTML = 'Conference'
+        }
+        else document.getElementById('week').innerHTML = '<%=week%>'
+      }
+    };
+    var txtFile = new XMLHttpRequest();
+    txtFile.onload = function() {
+      allText = txtFile.responseText;
+      allTextLines = allText.split(/\r\n|\n/);
+      var currentLine1 = allTextLines[0].split(',');
+      // Lets append the table headers we want
+      $('#myTable').append("<tr>");
+      for(var i=1;i<7;i++) {
+        $('tr').last().append("<th>" + currentLine1[i] + "</th>"); 
+      }
+      $('tr').last().append("</tr>")
+
+      // lets grab the table data we want
+      for(var i = 1; i < allTextLines.length; i++) {
+        var currentLine = allTextLines[i].split(',');
+        if (currentLine[0] == '<%=week%>') {
+          $('#myTable').append("<tr>")
+          for (var j = 1; j<7; j++) {
+            if (j==4||j==6) {
+              $('tr').last().append(`<td id="team"> <button>` + currentLine[j] + "</td>"); 
+            }
+            else {
+              $('tr').last().append("<td>" + currentLine[j] + "</td>");
+            }
+          }
+          $('tr').last().append("</tr>")
+        }
+        else continue; 
+      }
+    }
+    txtFile.open("get", "schedule.csv", true);
+    txtFile.send();
+  </script>
+
+</head>
+
+<body onload="setTitle()">
+  <div id="navbar">
+    <ul class="nav flex-column">
+      <li class="nav-item" style="font-weight:bold">
+        Navigation
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Week 1</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/2">Week 2</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/3">Week 3</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/4">Week 4</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/5">Week 5</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/6">Week 6</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/7">Week 7</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/8">Week 8</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/9">Week 9</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/10">Week 10</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/11">Week 11</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/12">Week 12</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/13">Week 14</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/14">Week 14</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/15">Week 15</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/16">Week 16</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/17">Week 17</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/wildcard">WildCard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/division">Division</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/conference">Conference</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/superbowl">Superbowl</a>
+      </li>
+    </ul>
+  </div>
+  <div id='content'>
+    <h1 style="font-family: 'Roboto Slab', serif;">
+      NFL Pick Ems League
+    </h1>
+    <h2 id="week" style="font-family: 'Roboto Slab', serif;">
+    </h2>
+    <table id='myTable' class="table-striped">
+    </table>
+  </div>
+</body>
+</html>
