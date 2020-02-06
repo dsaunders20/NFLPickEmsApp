@@ -7,9 +7,9 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 
   <script type="text/javascript">
-    function setTitle() {
+     function setTitle() {
       try {
-        if (Number.isInteger(<%=week%>)) {
+        if (Number.isInteger( <%= week %> )) {
           document.getElementById('week').innerHTML = 'Week <%=week%>';
         }
       }     
@@ -63,7 +63,7 @@
         Navigation
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/">Week 1</a>
+        <a class="nav-link" href="/1">Week 1</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/2">Week 2</a>

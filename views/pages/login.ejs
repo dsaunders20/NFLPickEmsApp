@@ -22,9 +22,14 @@
             <div>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
+            </div>>
         </form>
+        <p style="color: red;">           
+            <% if (messages.error) { %>
+                <% =messages.error %> 
+            <% } %> 
+        </p>
+        <button type="submit">Login</button</p>
         <p>Go to <a href="/register">Register</a></p>
     </div>
 </body>
