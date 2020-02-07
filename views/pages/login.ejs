@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 
     <title>Login</title>
 </head>
@@ -13,6 +14,7 @@
         Login
     </h1>
     <br>
+
     <div id="loginForm" class="jumbotron" style="text-align: center;">
         <form action="/login" method="POST">
             <div>
@@ -22,14 +24,15 @@
             <div>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
-            </div>>
-        </form>
-        <p style="color: red;">           
-            <% if (messages.error) { %>
-                <% =messages.error %> 
-            <% } %> 
-        </p>
-        <button type="submit">Login</button</p>
+            </div>
+            <p id="errorMessaging">
+            <% if (messages) { %> 
+                <%= messages.error %> 
+            <% } %>
+            </p> 
+            <button type="submit">Login</button>
+        </form> 
+
         <p>Go to <a href="/register">Register</a></p>
     </div>
 </body>
