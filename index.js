@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
 const methodOverride = require('method-override')
 
 const initializePassport = require('./passport-config');
@@ -32,7 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true });
+  useUnifiedTopology: true
+});
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'));
@@ -43,7 +45,8 @@ app.use(flash());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: db })
 }))
 app.use(passport.initialize());
 app.use(passport.session());
