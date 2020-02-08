@@ -19,6 +19,7 @@ initializePassport(passport,
 );
 
 const users = [];
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -26,6 +27,16 @@ app.set('view engine', 'ejs')
 var bodyParser = require('body-parser'); 
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// mongodb
+const mongoose = require('mongoose')
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true });
+const db = mongoose.connection
+db.on('error', error => console.error(error))
+db.once('open', () => console.log('Connected to Mongoose'));
+
 
 // for passport
 app.use(flash());
