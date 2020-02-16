@@ -93,7 +93,7 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 app.post('/login', passport.authenticate('local', {
   passReqToCallback: true,
-  successRedirect: '/1',
+  successRedirect: `/1`,
   failureRedirect: '/login',
   failureFlash: true,
 }));
@@ -102,12 +102,14 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('pages/register');
 });
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', async (req, res) => {
   // const hashedPassword = await bcrypt.hash(req.body.password, 10)
   const user = new User({
     name: req.body.name,
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    correctPicks: 0,
+    incorrectPicks: 0,
   })
   try {
     const newUser = await user.save({}, (err) => console.log(err) );
@@ -120,7 +122,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 });
 
 // regex route which accepts integers [1-17]
-app.get('^/:week([1-9]|1[0-7])$', checkAuthenticated, (req, res) => {
+app.get('/:week([1-9]|1[0-7])$', checkAuthenticated, (req, res) => {
   var week = req.params.week;
   res.render('pages/index', {'week': week, 'user':req.user});
 });
@@ -138,6 +140,17 @@ app.get('/conference', checkAuthenticated, (req, res) => {
 app.get('/superbowl', checkAuthenticated, (req, res) => {
   res.render('pages/index', {'week': 'SuperBowl', 'user':req.user});
 });
+
+app.post('/submitPicks', (req, res) => {
+  let picks = [];
+  for (const q in req.body) {
+    picks.push(req.body[q]);
+  }
+  console.log(picks);
+  res.redirect('/1')
+})
+
+
 
 app.get('/admin', async (req, res) => {
   try {
@@ -166,7 +179,7 @@ function checkAuthenticated(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    res.render('/1', { user: req.body } )
+    res.redirect('/1')
   }
   else next();
 }

@@ -41,3 +41,7 @@ table {
   border: 1px solid black;
   display: inline-block;
 }
+
+#picks {
+  padding-bottom: 5%;
+}

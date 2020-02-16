@@ -37,6 +37,8 @@ const userSchema = new mongoose.Schema({
     division: [String],
     conference: [String],
     superbowl: [String],
+    correctPicks: Number,
+    incorrectPicks: Number,
 });
 let User = mongoose.model('User', userSchema);
 module.exports = User;

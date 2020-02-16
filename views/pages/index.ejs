@@ -40,7 +40,7 @@
           $('#myTable').append("<tr>")
           for (var j = 1; j<7; j++) {
             if (j==4||j==6) {
-              $('tr').last().append(`<td> ${currentLine[j]} </br><input type="radio" name="game${count}" value="${currentLine[j]}"></td>`); 
+              $('tr').last().append(`<td> ${currentLine[j]} </br><input type="radio" name="game${count}" value="${currentLine[j]}" required></td>`); 
             }
             else {
               $('tr').last().append("<td>" + currentLine[j] + "</td>");
@@ -62,9 +62,13 @@
   <div id='header'>
     <h5>Welcome <%=user.name %> </h5>
     <br>
+    <div id='record'>
+      Current Record: <%=user.correctPicks%> - <%=user.incorrectPicks%>  
+    </div>
+    <br>
     <div id='logout'>
       <form action="/logout?_method=DELETE" method="POST">
-        <button type="submit">Log Out</button>
+        <button class="btn btn-primary" type="submit">Log Out</button>
       </form>
     </div>
   </div>
@@ -144,8 +148,12 @@
       </h1>
       <h2 id="week" style="font-family: 'Roboto Slab', serif;">
       </h2>
-      <table id='myTable' class="table-striped">
-      </table>
+      <form id='picks' action="/submitPicks" method="POST">
+        <table id='myTable' class="table-striped">
+        </table>
+        <br>
+        <button type="submit" class="btn btn-success btn-lg">Submit Picks!</button>
+      </form>
     </div>
 </body>
 </html>
